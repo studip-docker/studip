@@ -1,0 +1,26 @@
+version: "2"
+services:
+  db:
+    image: mariadb:10.4
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: studip_db
+      MYSQL_USER: studip_user
+      MYSQL_PASSWORD: studip_password
+  web:
+    build: .
+    ports:
+      - "8032:80"
+    restart: always
+    links:
+      - "db:database"
+    environment:
+      MYSQL_DATABASE: studip_db
+      MYSQL_USER: studip_user
+      MYSQL_PASSWORD: studip_password
+      MYSQL_STUDIP_HOST: database
+      MYSQL_HOST: database
+volumes:
+  db_data: {}
