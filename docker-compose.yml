@@ -14,13 +14,10 @@ services:
     ports:
       - "8032:80"
     restart: always
-    links:
-      - "db:database"
     environment:
       MYSQL_DATABASE: studip_db
       MYSQL_USER: studip_user
       MYSQL_PASSWORD: studip_password
-      MYSQL_STUDIP_HOST: database
-      MYSQL_HOST: database
+      MYSQL_HOST: db
 volumes:
   db_data: {}

@@ -11,7 +11,7 @@ if [ ! -f $CONFIGFILE ]; then
 
     # Setup config file
     sed "
-	/\$DB_STUDIP_HOST/ s/\"localhost\"/\"${MYSQL_STUDIP_HOST}\"/
+	/\$DB_STUDIP_HOST/ s/\"localhost\"/\"${MYSQL_HOST}\"/
 	/\$DB_STUDIP_USER/ s/\"\"/\"${MYSQL_USER}\"/
         /\$DB_STUDIP_PASSWORD/ s/\"\"/\"${MYSQL_PASSWORD}\"/
         /\$DB_STUDIP_DATABASE/ s/\"studip\"/\"${MYSQL_DATABASE}\"/" "$CONFIGFILE.dist" > $CONFIGFILE
@@ -27,7 +27,7 @@ if [ ! -f $CONFIGFILE ]; then
 
     echo "INSTALL ROOTUSER"
     mysql -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD $MYSQL_DATABASE < ${STUDIP}db/studip_root_user.sql
-    
+
     echo "INSTALL DEMODATA"
     mysql -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD $MYSQL_DATABASE < ${STUDIP}db/studip_demo_data.sql
 
