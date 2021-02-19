@@ -10,7 +10,13 @@ services:
       MYSQL_USER: studip_user
       MYSQL_PASSWORD: studip_password
   web:
-    build: .
+    build:
+      context: .
+      # Modify branch to the svn branch you want to check out
+      #args:
+      #  BRANCH: branches/4.5
+    depends_on:
+      - db
     ports:
       - "8032:80"
     restart: always
@@ -19,5 +25,8 @@ services:
       MYSQL_USER: studip_user
       MYSQL_PASSWORD: studip_password
       MYSQL_HOST: db
+
+      # Use proxy url if run behind a proxy
+      #PROXY_URL: https://studip.example.com/
 volumes:
   db_data: {}
