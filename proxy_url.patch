@@ -1,0 +1,17 @@
+Index: studip/lib/classes/Request.class.php
+===================================================================
+--- studip/lib/classes/Request.class.php	(revision 40367)
++++ studip/lib/classes/Request.class.php	(working copy)
+@@ -96,6 +96,12 @@
+      */
+     public static function protocol()
+     {
++
++	// If a reverse proxy tells us the required protocol we should respect that
++	if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
++		return $_SERVER['HTTP_X_FORWARDED_PROTO'];
++	}
++
+         return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+             ? 'https'
+             : 'http';
