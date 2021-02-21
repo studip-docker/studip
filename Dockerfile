@@ -1,7 +1,9 @@
 FROM php:7.4-apache
 
 # Install system requirements
-RUN apt update && apt install -y subversion default-mysql-client libcurl4-openssl-dev zlib1g-dev libpng-dev libonig-dev libzip-dev
+RUN apt update && apt install -y  --no-install-recommends \
+    subversion default-mysql-client libcurl4-openssl-dev zlib1g-dev libpng-dev libonig-dev libzip-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install php extensions
 RUN docker-php-ext-install pdo gettext curl gd mbstring zip pdo pdo_mysql mysqli
@@ -9,8 +11,8 @@ RUN docker-php-ext-install pdo gettext curl gd mbstring zip pdo pdo_mysql mysqli
 # Branch Arg
 ARG BRANCH=trunk
 
-# Checkout latest studip
-RUN svn co  --username=studip --password=studip --non-interactive "svn://develop.studip.de/studip/$BRANCH" /var/www/studip
+# Checkout studip
+RUN svn export  --username=studip --password=studip --non-interactive "svn://develop.studip.de/studip/$BRANCH" /var/www/studip
 
 # Reconfigure apache
 ENV APACHE_DOCUMENT_ROOT /var/www/studip/public
