@@ -9,7 +9,7 @@ RUN apt update && apt install -y  --no-install-recommends \
 RUN docker-php-ext-install pdo gettext curl gd mbstring zip pdo pdo_mysql mysqli
 
 # Branch Arg
-ARG BRANCH=branches/4.4
+ARG BRANCH=branches/4.3
 
 # Checkout studip
 RUN svn export  --username=studip --password=studip --non-interactive "svn://develop.studip.de/studip/$BRANCH" /var/www/studip
