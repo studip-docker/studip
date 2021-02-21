@@ -2,24 +2,24 @@ version: "2"
 services:
   db:
     image: mariadb:10.4
-    volumes:
-      - db_data:/var/lib/mysql
+
+    # The mysql volume has been deactivated to ensure that the database gets reinitialized every time
+    # volumes:
+    #   - db_data:/var/lib/mysql
     restart: always
     environment:
       MYSQL_DATABASE: studip_db
       MYSQL_USER: studip_user
       MYSQL_PASSWORD: studip_password
-      MYSQL_RANDOM_ROOT_PASSWORD: 1
   web:
     build:
       context: .
+      args:
+
       # Modify branch to the svn branch you want to check out
-      #args:
-      #  BRANCH: branches/4.5
+        BRANCH: dev-branches/StEP00349
     depends_on:
       - db
-    ports:
-      - "8032:80"
     restart: always
     environment:
       MYSQL_DATABASE: studip_db
@@ -29,5 +29,7 @@ services:
 
       # Use proxy url if run behind a proxy
       #PROXY_URL: https://studip.example.com/
-volumes:
-  db_data: {}
+
+# Unquote
+# volumes:
+#   db_data: {}
