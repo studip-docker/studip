@@ -17,10 +17,6 @@ ENV APACHE_DOCUMENT_ROOT /var/www/studip/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Patch proxy url problem
-COPY proxy_url.patch /tmp/proxy_url.patch
-RUN cd /var/www/studip/ && svn patch /tmp/proxy_url.patch
-
 # Add custom entrypoint
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod u+x /usr/local/bin/docker-entrypoint.sh
