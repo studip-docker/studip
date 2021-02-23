@@ -11,6 +11,7 @@ services:
       MYSQL_DATABASE: studip_db
       MYSQL_USER: studip_user
       MYSQL_PASSWORD: studip_password
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
   web:
     build:
       context: .
