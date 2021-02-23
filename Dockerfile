@@ -2,11 +2,11 @@ FROM php:7.4-apache
 
 # Install system requirements
 RUN apt update && apt install -y  --no-install-recommends \
-    subversion default-mysql-client libcurl4-openssl-dev zlib1g-dev libpng-dev libonig-dev libzip-dev \
+    subversion default-mysql-client libcurl4-openssl-dev zlib1g-dev libpng-dev libonig-dev libzip-dev libicu-dev unzip git \
     && rm -rf /var/lib/apt/lists/*
 
 # Install php extensions
-RUN docker-php-ext-install pdo gettext curl gd mbstring zip pdo pdo_mysql mysqli
+RUN docker-php-ext-install pdo gettext curl gd mbstring zip pdo pdo_mysql mysqli intl
 
 # Branch Arg
 ARG BRANCH=branches/4.5
@@ -18,6 +18,11 @@ RUN svn export  --username=studip --password=studip --non-interactive "svn://dev
 ENV APACHE_DOCUMENT_ROOT /var/www/studip/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
+# Install and Run composer
+COPY composer.sh /tmp/composer.sh
+RUN /tmp/composer.sh
+RUN php composer.phar install --working-dir /var/www/studip/
 
 # Add custom entrypoint
 COPY docker-entrypoint.sh /usr/local/bin/
