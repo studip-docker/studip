@@ -21,6 +21,7 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 
 # Install and Run composer
 COPY composer.sh /tmp/composer.sh
+RUN chmod u+x /tmp/composer.sh
 RUN /tmp/composer.sh
 RUN php composer.phar install --working-dir /var/www/studip/
 
