@@ -9,15 +9,7 @@ CONF="$STUDIP/config/config.inc.php"
 if [ ! -f $CONFIGFILE ]; then
     echo "Setting up new config"
 
-    # Setup config file
-    sed "
-	/\$DB_STUDIP_HOST/ s/\"localhost\"/\"${MYSQL_HOST}\"/
-	/\$DB_STUDIP_USER/ s/\"\"/\"${MYSQL_USER}\"/
-    /\$DB_STUDIP_PASSWORD/ s/\"\"/\"${MYSQL_PASSWORD}\"/
-    /\$DB_STUDIP_DATABASE/ s/\"studip\"/\"${MYSQL_DATABASE}\"/
-    s#//\$ABSOLUTE_URI_STUDIP = 'https://www.studip.de/';#if (isset(\$_ENV['PROXY_URL'])) \$ABSOLUTE_URI_STUDIP = \$_ENV['PROXY_URL'];#
-    s#//\$ASSETS_URL = 'https://www.studip.de/assets/';#if (isset(\$_ENV['PROXY_URL'])) \$ASSETS_URL = \$_ENV['PROXY_URL'].'/assets/';#" "$CONFIGFILE.dist" > $CONFIGFILE
-
+    cp "$CONFIGFILE.dist.docker" "$CONFIGFILE" 
     cp "$CONF.dist" "$CONF" 
 
     # Setup mysql database
