@@ -42,6 +42,12 @@ if [ ! -f $CONFIGFILE ]; then
     echo "INSTALLATION FINISHED"
 fi
 
+if [ ! -z $AUTO_MIGRATE ]; then
+    echo "Migrate Instance"
+    php "$STUDIP/cli/migrate.php"
+    echo "Migration finished"
+fi
+
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
 	set -- apache2-foreground "$@"

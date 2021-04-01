@@ -19,6 +19,10 @@ services:
 
       # Modify branch to the svn branch you want to check out
         BRANCH: dev-branches/tic10856-tiled-courses
+
+    # Redirect port to something (hopefully) unused
+    ports:
+      - 8032:80
     depends_on:
       - db
     restart: always
@@ -27,10 +31,13 @@ services:
       MYSQL_USER: studip_user
       MYSQL_PASSWORD: studip_password
       MYSQL_HOST: db
+      
+      # Use automigrate to migrate your instance on startup
+      # AUTO_MIGRATE: 1
 
       # Use proxy url if run behind a proxy
       #PROXY_URL: https://studip.example.com/
 
-# Unquote
+# Unquote for persistant db data
 # volumes:
 #   db_data: {}
