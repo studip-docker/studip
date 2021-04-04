@@ -4,7 +4,8 @@ services:
     image: mariadb:10.4
 
     # The mysql volume has been deactivated to ensure that the database gets reinitialized every time
-    # volumes:
+    volumes:
+      - ./mysql:/var/run/mysqld
     #   - db_data:/var/lib/mysql
     restart: always
     environment:
@@ -20,6 +21,9 @@ services:
       # Modify branch to the svn branch you want to check out
         BRANCH: dev-branches/tic10856-tiled-courses
 
+    volumes:
+      - ./mysql:/var/run/mysqld
+    
     # Redirect port to something (hopefully) unused
     ports:
       - 8032:80
@@ -30,7 +34,8 @@ services:
       MYSQL_DATABASE: studip_db
       MYSQL_USER: studip_user
       MYSQL_PASSWORD: studip_password
-      MYSQL_HOST: db
+      # MYSQL_HOST: localhost
+      MYSQL_SOCKET: /var/run/mysqld/mysqld.sock
       
       # Use automigrate to migrate your instance on startup
       # AUTO_MIGRATE: 1

@@ -13,7 +13,12 @@ if [ ! -f $CONFIGFILE ]; then
     cp "$CONF.dist" "$CONF" 
 
     # Setup mysql database
-    echo "INSTALL DB"
+    echo "Waiting for db to come up"
+
+    # If we deal with a socket and mysql host is not set overwrite the host to make MYSQL work
+    if [ -z $MYSQL_HOST ]; then
+        MYSQL_HOST='localhost'
+    fi;
 
 # wait until MySQL is really available
     maxcounter=45
@@ -28,6 +33,9 @@ if [ ! -f $CONFIGFILE ]; then
         fi;
     done
 
+    echo "Database answered"
+
+    echo "INSTALL DB"
     mysql -f -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD $MYSQL_DATABASE < ${STUDIP}/db/studip.sql
     echo "INSTALL DEFAULT DATA"
     mysql -f -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD $MYSQL_DATABASE < ${STUDIP}/db/studip_default_data.sql

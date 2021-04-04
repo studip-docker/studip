@@ -17,9 +17,14 @@ namespace {
 
     // default Stud.IP database (DB_Seminar)
     $DB_STUDIP_HOST = getenv('MYSQL_HOST');
+    $DB_STUDIP_SOCKET = getenv('MYSQL_SOCKET');
     $DB_STUDIP_USER = getenv('MYSQL_USER');
     $DB_STUDIP_PASSWORD = getenv('MYSQL_PASSWORD');
     $DB_STUDIP_DATABASE = getenv('MYSQL_DATABASE');
+
+    // Unset unused variables
+    if (!$DB_STUDIP_HOST) unset($DB_STUDIP_HOST);
+    if (!$DB_STUDIP_SOCKET) unset($DB_STUDIP_SOCKET);
 
     /*URL
     ----------------------------------------------------------------

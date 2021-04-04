@@ -38,6 +38,9 @@ RUN make
 # Add config template
 COPY config_local.php /var/www/studip/config/config_local.inc.php.dist.docker
 
+# Fix bootstrap.php
+COPY bootstrap.php /var/www/studip/lib/bootstrap.php
+
 # Add custom entrypoint
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod u+x /usr/local/bin/docker-entrypoint.sh
