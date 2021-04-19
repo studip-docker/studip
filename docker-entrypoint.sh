@@ -44,7 +44,9 @@ fi
 
 if [ ! -z $AUTO_MIGRATE ]; then
     echo "Migrate Instance"
-    php "$STUDIP/cli/migrate.php"
+    
+    # If migrate fails start instance anyway
+    php "$STUDIP/cli/migrate.php" || true
     echo "Migration finished"
 fi
 
