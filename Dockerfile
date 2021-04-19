@@ -3,7 +3,7 @@ FROM php:7.4-apache
 
 # Install system requirements
 RUN apt update && apt install -y  --no-install-recommends \
-    subversion default-mysql-client libcurl4-openssl-dev zlib1g-dev libpng-dev libonig-dev libzip-dev libicu-dev unzip git \
+    subversion default-mysql-client default-libmysqlclient-dev libcurl4-openssl-dev zlib1g-dev libpng-dev libonig-dev libzip-dev libicu-dev unzip git \
     curl apt-transport-https ca-certificates lsb-release gnupg \
     && rm -rf /var/lib/apt/lists/*
 

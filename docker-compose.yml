@@ -35,7 +35,7 @@ services:
       MYSQL_USER: studip_user
       MYSQL_PASSWORD: studip_password
       # MYSQL_HOST: localhost
-      MYSQL_SOCKET: /var/run/mysqld/mysqld.sock
+      #MYSQL_SOCKET: /var/run/mysqld/mysqld.sock
       
       # Use automigrate to migrate your instance on startup
       # AUTO_MIGRATE: 1
