@@ -24,6 +24,9 @@ services:
       MYSQL_USER: studip_user
       MYSQL_PASSWORD: studip_password
       MYSQL_HOST: db
+      
+      # Use automigrate to migrate your instance on startup
+      # AUTO_MIGRATE: 1
 
       # Use proxy url if run behind a proxy
       #PROXY_URL: https://studip.example.com/
