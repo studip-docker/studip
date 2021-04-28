@@ -36,4 +36,10 @@ namespace {
         $ASSETS_URL = $PROXY_URL.'/assets/';
         unset($PROXY_URL);
     }
+
+    // Use autoproxy
+    if (getenv('AUTO_PROXY')) {
+        $ABSOLUTE_URI_STUDIP = $_SERVER['HTTP_X_FORWARDED_PROTO'].'://'.$_SERVER['HTTP_X_FORWARDED_HOST'].'/';
+        $ASSETS_URL = $ABSOLUTE_URI_STUDIP.'/assets/';
+    }
 }
