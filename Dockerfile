@@ -21,7 +21,7 @@ RUN chmod u+x /tmp/composer.sh
 RUN /tmp/composer.sh
 
 # Branch Arg
-ARG BRANCH=branches/4.6
+ARG BRANCH=trunk
 
 # Checkout studip
 RUN svn export  --username=studip --password=studip --non-interactive "svn://develop.studip.de/studip/$BRANCH" /var/www/studip
