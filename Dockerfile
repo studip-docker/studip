@@ -36,7 +36,7 @@ WORKDIR /var/www/studip
 RUN make
 
 # Add config template
-COPY config_local.php /var/www/studip/config/config_local.inc.php.dist.docker
+COPY config_local.php /config/config_local.inc.php
 
 # Add custom entrypoint
 COPY docker-entrypoint.sh /usr/local/bin/

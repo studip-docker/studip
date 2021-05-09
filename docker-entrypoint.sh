@@ -3,13 +3,14 @@ set -e
 
 STUDIP='/var/www/studip'
 CONFIGFILE="$STUDIP/config/config_local.inc.php"
+DOCKERCONFIGFILE="/config/config_local.inc.php"
 CONF="$STUDIP/config/config.inc.php"
 
 # Check if we have a config
 if [ ! -f $CONFIGFILE ]; then
     echo "Setting up new config"
 
-    cp "$CONFIGFILE.dist.docker" "$CONFIGFILE" 
+    cp "$DOCKERCONFIGFILE" "$CONFIGFILE" 
     cp "$CONF.dist" "$CONF" 
 
     # Setup mysql database
