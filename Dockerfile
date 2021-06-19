@@ -4,6 +4,7 @@ FROM php:7.4-apache as base
 # Install system requirements
 RUN apt update && apt install -y  --no-install-recommends \
     default-mysql-client default-libmysqlclient-dev libcurl4-openssl-dev zlib1g-dev libpng-dev libonig-dev libzip-dev libicu-dev \
+    cron \
     && rm -rf /var/lib/apt/lists/*
 
 # Install php extensions
@@ -52,6 +53,11 @@ COPY config_local.php /config/config_local.inc.php
 # Add custom entrypoint
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod u+x /usr/local/bin/docker-entrypoint.sh
+
+# Add Cronjob
+COPY crontab /etc/cron.d/crontab
+RUN chmod 0644 /etc/cron.d/crontab
+RUN crontab /etc/cron.d/crontab
 
 # Set start parameters
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]

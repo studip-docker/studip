@@ -64,4 +64,7 @@ if [ "${1#-}" != "$1" ]; then
 	set -- apache2-foreground "$@"
 fi
 
+# Start cron
+cron
+
 exec "$@"
