@@ -12,23 +12,26 @@ if [ ! -f $CONFIGFILE ]; then
 
     cp "$DOCKERCONFIGFILE" "$CONFIGFILE" 
     cp "$CONF.dist" "$CONF" 
+fi
+
+# wait until MySQL is really available
+maxcounter=45
+
+counter=1
+while ! mysql -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD -e "show databases;" > /dev/null 2>&1; do
+    sleep 1
+    counter=`expr $counter + 1`
+    if [ $counter -gt $maxcounter ]; then
+        >&2 echo "We have been waiting for MySQL too long already; failing."
+        exit 1
+    fi;
+done
+
+# Check if the connected database has tables, otherwise install the database
+if [[ $(mysql -f -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD $MYSQL_DATABASE -e "show tables;" --batch | wc -l) -eq 0 ]]; then
 
     # Setup mysql database
     echo "INSTALL DB"
-
-# wait until MySQL is really available
-    maxcounter=45
- 
-    counter=1
-    while ! mysql -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD -e "show databases;" > /dev/null 2>&1; do
-        sleep 1
-        counter=`expr $counter + 1`
-        if [ $counter -gt $maxcounter ]; then
-            >&2 echo "We have been waiting for MySQL too long already; failing."
-            exit 1
-        fi;
-    done
-
     mysql -f -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD $MYSQL_DATABASE < ${STUDIP}/db/studip.sql
     echo "INSTALL DEFAULT DATA"
     mysql -f -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD $MYSQL_DATABASE < ${STUDIP}/db/studip_default_data.sql
@@ -44,6 +47,8 @@ if [ ! -f $CONFIGFILE ]; then
     fi
 
     echo "INSTALLATION FINISHED"
+else
+    echo "Found some SQL table. Skipping installation"
 fi
 
 if [ ! -z $AUTO_MIGRATE ]; then
