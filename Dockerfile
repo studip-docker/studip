@@ -23,9 +23,7 @@ RUN apt update && apt install -y --no-install-recommends nodejs \
     && rm -rf /var/lib/apt/lists/*
 
 # Install composer
-COPY composer.sh /tmp/composer.sh
-RUN chmod u+x /tmp/composer.sh
-RUN /tmp/composer.sh
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 # Branch Arg
 ARG BRANCH=trunk
