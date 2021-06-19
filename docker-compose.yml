@@ -33,5 +33,8 @@ services:
       # PROXY_URL: https://studip.example.com/
       # AUTO_PROXY: 1
 
+      # Demo data for your studip instance
+      DEMO_DATA: 1
+
 volumes:
   db_data: {}

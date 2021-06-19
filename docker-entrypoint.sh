@@ -37,8 +37,11 @@ if [ ! -f $CONFIGFILE ]; then
     echo "INSTALL ROOTUSER"
     mysql -f -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD $MYSQL_DATABASE < ${STUDIP}/db/studip_root_user.sql
 
-    echo "INSTALL DEMODATA"
-    mysql -f -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD $MYSQL_DATABASE < ${STUDIP}/db/studip_demo_data.sql
+    # Check if demodata is required
+    if [ ! -z $DEMO_DATA ]; then
+        echo "INSTALL DEMODATA"
+        mysql -f -u $MYSQL_USER -h $MYSQL_HOST -p$MYSQL_PASSWORD $MYSQL_DATABASE < ${STUDIP}/db/studip_demo_data.sql
+    fi
 
     echo "INSTALLATION FINISHED"
 fi
