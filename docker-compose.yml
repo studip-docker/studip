@@ -6,6 +6,7 @@ services:
       - db_data:/var/lib/mysql
     restart: always
     environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
       MYSQL_DATABASE: studip_db
       MYSQL_USER: studip_user
       MYSQL_PASSWORD: studip_password
