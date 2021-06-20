@@ -6,6 +6,7 @@ services:
       - db_data:/var/lib/mysql
     restart: always
     environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
       MYSQL_DATABASE: studip_db
       MYSQL_USER: studip_user
       MYSQL_PASSWORD: studip_password
@@ -31,6 +32,9 @@ services:
       # Use proxy url OR autoproxy if run behind a proxy
       # PROXY_URL: https://studip.example.com/
       # AUTO_PROXY: 1
+
+      # Demo data for your studip instance
+      DEMO_DATA: 1
 
 volumes:
   db_data: {}
