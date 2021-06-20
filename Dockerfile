@@ -3,10 +3,11 @@ FROM php:7.4-apache as base
 
 # Install system requirements
 RUN apt update && apt install -y  --no-install-recommends \
-    default-mysql-client default-libmysqlclient-dev libcurl4-openssl-dev zlib1g-dev libpng-dev libonig-dev libzip-dev libicu-dev \
+    default-mysql-client default-libmysqlclient-dev libcurl4-openssl-dev zlib1g-dev libpng-dev libjpeg-dev libonig-dev libzip-dev libicu-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Install php extensions
+RUN docker-php-ext-configure gd --with-jpeg
 RUN docker-php-ext-install pdo gettext curl gd mbstring zip pdo pdo_mysql mysqli intl json
 
 FROM base as build
